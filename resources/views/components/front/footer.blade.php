@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="footer-logo">
-                            <a href="index.html">
+                            <a href="{{ route('front.home') }}">
                                 <img src="{{ asset('front/assets/images/logo/white-logo.svg') }}" alt="#">
                             </a>
                         </div>

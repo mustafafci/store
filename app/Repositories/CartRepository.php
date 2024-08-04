@@ -12,9 +12,18 @@ use App\Interfaces\CartRepositoryInterface;
 
 class CartRepository implements CartRepositoryInterface
 {
+    protected $items;
+
+    public function __construct()
+    {
+        $this->items = collect([]);
+    }
     public function get()
     {
-        return Cart::with('product')->where('cookie_id', $this->getCookieId())->get();
+        if (!$this->items->count()) {
+            $this->items = Cart::with('product')->where('cookie_id', $this->getCookieId())->get();
+        }
+        return $this->items;
     }
 
     public function add($product_id, $quantity = 1)
@@ -23,12 +32,14 @@ class CartRepository implements CartRepositoryInterface
             ->where('product_id', $product_id)->first();
 
         if (!$item) {
-            return Cart::create([
+            $item = Cart::create([
                 'cookie_id' => $this->getCookieId(),
                 'product_id' => $product_id,
                 'user_id' => Auth::id(),
                 'quantity' => $quantity
             ]);
+
+            return $this->get()->push($item);
         }
 
         return $item->increment('quantity', $quantity);
@@ -53,10 +64,14 @@ class CartRepository implements CartRepositoryInterface
 
     public function total(): float
     {
-        return Cart::where('cookie_id', $this->getCookieId())
-            ->join('products', 'products.id', '=', 'carts.product_id')
-            ->selectRaw('SUM(products.price * carts.quantity) as total')
-            ->value('total');
+        // return (float) Cart::where('cookie_id', $this->getCookieId())
+        //     ->join('products', 'products.id', '=', 'carts.product_id')
+        //     ->selectRaw('SUM(products.price * carts.quantity) as total')
+        //     ->value('total');
+
+        return $this->get()->sum(function ($item) {
+            return $item->quantity * $item->product->price;
+        });
     }
 
     public function empty()
