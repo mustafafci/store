@@ -25,7 +25,7 @@ class Cart extends Model
     // creating , created , updating , updated , deleteing , deleted
     // restoring , restored , retrieved , saving , saved
 
-    public function booted()
+    public static function booted()
     {
         // trigger every time creating cart
         // static::creating(function (Cart $cart) {

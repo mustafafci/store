@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\CartRepositoryInterface;
+use App\Repositories\CartRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
     }
 
     /**
