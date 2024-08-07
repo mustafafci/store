@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
-use App\Interfaces\CartRepositoryInterface;
+use App\Listeners\EmptyCart;
+use App\Listeners\ReduceProductQuantity;
 use App\Repositories\CartRepository;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\CartRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        // Event::listen(ReduceProductQuantity::class);
+        // Event::listen(
+        //     EmptyCart::class
+        // );
     }
 }

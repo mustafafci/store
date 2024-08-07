@@ -30,9 +30,22 @@ class CartController extends Controller
             'product_id' => ['required', 'exists:products,id'],
             'quantity' => ['required', 'min:1']
         ]);
-        
+
         $this->cart->add($request->product_id, $request->quantity);
 
-        return redirect()->route('cart.index');
+        return redirect()->route('front.cart.index');
+    }
+
+
+    public function update(Request $request)
+    {
+
+        $this->cart->update($request->product_id, $request->quantity);
+    }
+
+    public function delete(Request $request)
+    {
+        $this->cart->delete($request->product_id);
+        return response()->json(['success' => 'deleted successfully']);
     }
 }

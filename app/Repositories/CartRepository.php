@@ -39,27 +39,29 @@ class CartRepository implements CartRepositoryInterface
                 'quantity' => $quantity
             ]);
 
-            return $this->get()->push($item);
+            $this->get()->push($item);
+            return $item;
         }
 
         return $item->increment('quantity', $quantity);
 
     }
 
-    public function update(Product $product, $quantity)
+    public function update($product_id, $quantity)
     {
         Cart::where('cookie_id', $this->getCookieId())
-            ->where('product_id', $product->id)
+            ->where('product_id', $product_id)
             ->update([
                 'quantity' => $quantity
             ]);
     }
 
-    public function delete(Product $product)
+    public function delete($product_id)
     {
         Cart::where('cookie_id', $this->getCookieId())
-            ->where('product_id', $product->id)
+            ->where('product_id', $product_id)
             ->delete();
+
     }
 
     public function total(): float
