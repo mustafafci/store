@@ -7,11 +7,13 @@ use App\Http\Middleware\CheckUserType;
 
 
 
-Route::get("/dashboard", [DashboardController::class, 'index'])->middleware(['auth' , 'checkUserType:admin'])->name('dashboard');
+Route::get("/dashboard", [DashboardController::class, 'index'])
+    ->middleware(['auth', 'checkUserType:admin', 'MarkNotificationAsRead'])
+    ->name('dashboard');
 
 Route::group([
     "prefix" => "dashboard",
-    'middleware' => ['auth', 'checkUserType:admin'],
+    'middleware' => ['auth', 'checkUserType:admin','MarkNotificationAsRead'],
     'as' => 'dashboard.'
 ], function () {
 

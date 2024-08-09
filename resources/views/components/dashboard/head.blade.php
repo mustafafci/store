@@ -33,6 +33,25 @@
             z-index: 9;
         }
     </style>
+    <script>
+        let userId = "{{ Auth::id() }}"
+    </script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('ec3f766f899e2a1a9d06', {
+            cluster: 'mt1'
+        });
+
+        var channel = pusher.subscribe('notify.' + userId);
+        channel.bind( function(data) {
+            console.log(data);
+            alert(JSON.stringify(data));
+        });
+
+    </script>
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->

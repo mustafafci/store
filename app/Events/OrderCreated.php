@@ -32,7 +32,12 @@ class OrderCreated implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            'channel-name'
+            new PrivateChannel('channel-name')
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'order-created';
     }
 }

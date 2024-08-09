@@ -26,9 +26,12 @@ class ReduceProductQuantity
     public function handle(ReduceProductQuantityEvent $event): void
     {
         //dd($event->order->products);
-        foreach ($event->order->products as $product) {
-            $product->decrement('quantity', $product->pivot->quantity);
+        try {
+            foreach ($event->order->products as $product) {
+                $product->decrement('quantity', $product->pivot->quantity);
 
+            }
+        } catch (\Throwable $th) {
         }
         // foreach (Cart::get() as $item) {
         //     Product::where('id', $item->product_id)

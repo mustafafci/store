@@ -10,7 +10,8 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "mbezhanov/faker-provider-collection": "^2.0",
-        "php-flasher/flasher-laravel": "^2.0"
+        "php-flasher/flasher-laravel": "^2.0",
+        "pusher/pusher-php-server": "^7.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",

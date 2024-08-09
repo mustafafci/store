@@ -28,8 +28,6 @@ class SendOrderCreatedNotification
         // store owner
         $user = User::where('store_id', $event->order->store_id)->first();
 
-        //user purchase 
-        $user = $event->order->billingAddress->email;
         $user->notify(new OrderCreatedNotification($event->order));
 
         //Notification::send($users , new OrderCreatedNotification($order)); // send to many users
